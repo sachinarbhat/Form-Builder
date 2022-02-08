@@ -91,7 +91,7 @@ export default {
 <style scoped>
 .box {
   width: 100%;
-  height: 520px;
+  height: 510px;
   background-color: whitesmoke;
 
   padding: 5px;
