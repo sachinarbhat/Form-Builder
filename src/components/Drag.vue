@@ -1,26 +1,29 @@
 <template>
-  <div class="row row-cols-1 text-center">
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="textbox"
+  <div class="mt-2 list-group rounded">
+  <div class="text-warning list-group-item">General</div>
+    <drag class="list-group-item" :transfer-data="textbox"
       >Text Field</drag
     >
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="numberbox"
+    <drag class="list-group-item" :transfer-data="numberbox"
       >Number Field</drag
     >
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="checkbox"
+    <drag class="list-group-item" :transfer-data="checkbox"
       >Checkbox Field</drag
     >
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="radiobox"
+    <drag class="list-group-item" :transfer-data="radiobox"
       >Radio Field</drag
     >
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="datebox"
+    <drag class="list-group-item" :transfer-data="datebox"
       >Date Field</drag
     >
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="passwordbox"
+    <drag class="list-group-item" :transfer-data="passwordbox"
       >Password Field</drag
     >
-    <drag class="card bg-dark text-light p-3 col" :transfer-data="submitbox"
+    <drag class="list-group-item" :transfer-data="submitbox"
       >Submit Field</drag
     >
+    <input v-model="msg.labelname" placeholder="Enter the label"/>
+    <drag class="list-group-item" :transfer-data="msg">Drag Label</drag>
   </div>
 </template>
 
@@ -33,6 +36,9 @@ export default {
   },
   data: function () {
     return {
+      msg:{
+        labelname:""
+      },
       textbox: {
         types: "text",
         info: "Enter text here....",
@@ -73,6 +79,11 @@ export default {
   border: 5px solid gray;
   margin: 0;
 }
-.card{
-cursor: -webkit-grab; cursor: grab;}
+.list-group{
+cursor: -webkit-grab; cursor: grab;
+}
+.list-group-item{
+  
+background-color: whitesmoke;
+}
 </style>

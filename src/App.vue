@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div class="container mt-2" id="app">
+  <span class="h5"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Abawikilogo.png" alt="ABA" width="7%"/> Admin Utility Tool</span>
+  
+  <hr/>
     <router-view/>
   </div>
 </template>

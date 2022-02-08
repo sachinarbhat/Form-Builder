@@ -1,14 +1,22 @@
 <template>
-  <div class="bg-dark text-light">
+  <div>
     <button class="btn btn-primary" @click="gotomain">Go back</button>
     <h2><i class="fa fa-file"></i> Your Form</h2>
     <div class="mt-4 box">
-      <div v-for="(info, index) in forminfo" :key="index">
-        <input :type="info.data" :placeholder="info.name" />
-        <br />
-        <br />
+      <div class="row justify-content-start">
+        <div class="col-1">
+          <p class="mb-3" v-for="l in formlabel" :key="l.id">
+            {{ l.labelname }}
+          </p>
+        </div>
+        <div class="col-1">
+          <div class="mt-1" v-for="(info, index) in forminfo" :key="index">
+            <input class="mb-2" :type="info.data" :placeholder="info.name" />
+          </div>
+        </div>
       </div>
     </div>
+    <button @click="jsonwatch" class="btn btn-outline-info">JSON Watch</button>
   </div>
 </template>
 
@@ -19,6 +27,7 @@ export default {
   data() {
     return {
       forminfo: [],
+      formlabel: [],
     };
   },
   created() {
@@ -26,6 +35,11 @@ export default {
       localStorage.setItem("Formtypes", JSON.stringify([]));
     }
     this.forminfo = JSON.parse(localStorage.getItem("Formtypes"));
+
+    if (!localStorage.getItem("Labeltypes")) {
+      localStorage.setItem("Labeltypes", JSON.stringify([]));
+    }
+    this.formlabel = JSON.parse(localStorage.getItem("Labeltypes"));
   },
   methods: {
     gotomain: function () {
@@ -46,6 +60,9 @@ export default {
           swal("Your Form is Safe....");
         }
       });
+    },
+    jsonwatch: function () {
+      alert(localStorage.getItem("Formtypes"));
     },
   },
 };
