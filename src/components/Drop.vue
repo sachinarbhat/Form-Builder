@@ -54,7 +54,6 @@ export default {
         this.label.push(labelitem);
       }
       event;
-      console.log(this.label);
     },
     check: function () {
       this.$router.push({ name: "form" });
@@ -79,7 +78,37 @@ export default {
         labels.push({ id: value.id, labelname: value.name });
         localStorage.setItem("Labeltypes", JSON.stringify(labels));
       });
-      this.label=[];
+
+      if (!localStorage.getItem("Fullform")) {
+        localStorage.setItem("Fullform", JSON.stringify([]));
+      }
+      const fullform = JSON.parse(localStorage.getItem("Fullform"));
+      if (this.label.length < this.divs.length) {
+        let min = this.label.length;
+        let max = this.divs.length;
+        for (let i = min; i <= max; i++) {
+          let labelitem = {
+            name: "No_label",
+            id: i,
+          };
+          this.label.push(labelitem);
+        }
+        console.log(this.label);
+      }
+      for (let i = 0; i < this.divs.length; i++) {
+        if (this.label[i].name === undefined) {
+          console.log("you Got me");
+        } else {
+          fullform.push({
+            id: i,
+            inputtype: this.divs[i].data,
+            name: this.label[i].name,
+          });
+          localStorage.setItem("Fullform", JSON.stringify(fullform));
+        }
+      }
+
+      this.label = [];
       this.divs = [];
       swal("Nice!", "You Created a form!", "success");
       this.$router.push({ name: "form" });

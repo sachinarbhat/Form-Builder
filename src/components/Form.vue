@@ -3,18 +3,15 @@
     <button class="btn btn-primary" @click="gotomain">Go back</button>
     <h2><i class="fa fa-file"></i> Your Form</h2>
     <div class="mt-4 box">
-      <div class="row justify-content-start">
-        <div class="col-1">
-          <p class="mb-3" v-for="l in formlabel" :key="l.id">
-            {{ l.labelname }}
-          </p>
-        </div>
-        <div class="col-1">
-          <div class="mt-1" v-for="(info, index) in forminfo" :key="index">
-            <input class="mb-2" :type="info.data" :placeholder="info.name" />
+          <div class="mb-3" v-for="info in fullform" :key="info.id">
+            <label class="form-label" v-if="info.name != 'No_label'">{{ info.name }} </label>
+            <br/>
+              <input
+              class="mb-2"
+              :type="info.inputtype"
+              :placeholder="'Enter' + ' ' + info.name + ' ' + 'Here...'"
+            />
           </div>
-        </div>
-      </div>
     </div>
     <button @click="jsonwatch" class="btn btn-outline-info">JSON Watch</button>
   </div>
@@ -26,20 +23,14 @@ export default {
   name: "form",
   data() {
     return {
-      forminfo: [],
-      formlabel: [],
+      fullform: [],
     };
   },
   created() {
-    if (!localStorage.getItem("Formtypes")) {
-      localStorage.setItem("Formtypes", JSON.stringify([]));
+    if (!localStorage.getItem("Fullform")) {
+      localStorage.setItem("Fullform", JSON.stringify([]));
     }
-    this.forminfo = JSON.parse(localStorage.getItem("Formtypes"));
-
-    if (!localStorage.getItem("Labeltypes")) {
-      localStorage.setItem("Labeltypes", JSON.stringify([]));
-    }
-    this.formlabel = JSON.parse(localStorage.getItem("Labeltypes"));
+    this.fullform = JSON.parse(localStorage.getItem("Fullform"));
   },
   methods: {
     gotomain: function () {
@@ -62,7 +53,7 @@ export default {
       });
     },
     jsonwatch: function () {
-      alert(localStorage.getItem("Formtypes"));
+      swal(localStorage.getItem("Fullform"));
     },
   },
 };
