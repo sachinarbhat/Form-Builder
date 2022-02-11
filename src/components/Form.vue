@@ -3,14 +3,15 @@
     <button class="btn btn-primary" @click="gotomain">Go back</button>
     <h2><i class="fa fa-file"></i> Your Form</h2>
     <div class="mt-4 box">
-          <div class="mb-3" v-for="info in fullform" :key="info.id">
+          <div  v-for="info in fullform" :key="info.id">
             <label class="form-label" v-if="info.name != 'No_label'">{{ info.name }} </label>
             <br/>
-              <input
-              class="mb-2"
+              <input v-if="info.inputtype !='textarea'"
+              class="mb-3"
               :type="info.inputtype"
               :placeholder="'Enter' + ' ' + info.name + ' ' + 'Here...'"
-            />
+            /><a v-if="info.linkname!='No_link'" :href="info.linkname"><i class="fa fa-link"></i></a>
+            <textarea v-if="info.inputtype=='textarea'" :placeholder="'Enter' + ' ' + info.name + ' ' + 'Here...'"></textarea>
           </div>
     </div>
     <button @click="jsonwatch" class="btn btn-outline-info">JSON Watch</button>

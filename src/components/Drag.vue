@@ -1,29 +1,23 @@
 <template>
   <div class="mt-2 list-group rounded">
-  <div class="text-warning list-group-item">General</div>
-    <drag class="list-group-item" :transfer-data="textbox"
-      >Text Field</drag
-    >
-    <drag class="list-group-item" :transfer-data="numberbox"
-      >Number Field</drag
-    >
-    <drag class="list-group-item" :transfer-data="checkbox"
-      >Checkbox Field</drag
-    >
-    <drag class="list-group-item" :transfer-data="radiobox"
-      >Radio Field</drag
-    >
-    <drag class="list-group-item" :transfer-data="datebox"
-      >Date Field</drag
-    >
-    <drag class="list-group-item" :transfer-data="passwordbox"
-      >Password Field</drag
-    >
-    <drag class="list-group-item" :transfer-data="submitbox"
-      >Submit Field</drag
-    >
-    <input v-model="msg.labelname" placeholder="Enter the label"/>
-    <drag class="list-group-item" :transfer-data="msg">Drag Label</drag>
+    <div class="text-warning list-group-item" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">General</div>
+    <div class="collapse" id="collapseExample">
+          <input v-model="msg.labelname" placeholder="Enter the label" />
+          <drag class="list-group-item" :transfer-data="msg">Label</drag>
+          <drag class="list-group-item" :transfer-data="textbox">Textbox</drag>
+          <drag class="list-group-item" :transfer-data="textareabox">Textarea</drag>
+          <drag class="list-group-item" :transfer-data="radiobox">Radio Button</drag>
+          <drag class="list-group-item" :transfer-data="checkbox">Checkbox</drag>
+          <drag class="list-group-item" :transfer-data="submitbox">Button</drag>
+          <input v-model="msg2.linkname" placeholder="Enter the URL to Link" />
+          <drag class="list-group-item" :transfer-data="msg2">Link Button</drag>
+          <drag class="list-group-item" :transfer-data="datebox">Datepicker</drag>
+    </div>
+    <div class="text-warning list-group-item" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">Advanced</div>
+        <div class="collapse" id="collapseExample2">
+        <drag class="list-group-item" :transfer-data="filebox">File Upload</drag>
+        <drag class="list-group-item" :transfer-data="urlbox">URL</drag>
+    </div>
   </div>
 </template>
 
@@ -36,16 +30,23 @@ export default {
   },
   data: function () {
     return {
-      msg:{
-        labelname:""
+      msg: {
+        labelname: "",
+      },
+      msg2: {
+        linkname: "",
+      },
+      textareabox: {
+        types: "textarea",
+        info: "Enter text area here....",
       },
       textbox: {
         types: "text",
         info: "Enter text here....",
       },
-      numberbox: {
-        types: "number",
-        info: "Enter number here....",
+      filebox: {
+        types: "file",
+        info: "Choose your file",
       },
       checkbox: {
         types: "checkbox",
@@ -67,6 +68,10 @@ export default {
         types: "submit",
         info: "Enter submit here....",
       },
+      urlbox: {
+        types: "url",
+        info: "Enter URL here....",
+      },
     };
   },
 };
@@ -79,11 +84,11 @@ export default {
   border: 5px solid gray;
   margin: 0;
 }
-.list-group{
-cursor: -webkit-grab; cursor: grab;
+.list-group {
+  cursor: -webkit-grab;
+  cursor: grab;
 }
-.list-group-item{
-  
-background-color: whitesmoke;
+.list-group-item {
+  background-color: whitesmoke;
 }
 </style>

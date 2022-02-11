@@ -4,12 +4,22 @@
       <div class="col-11 a">
         <drop class="box" @drop="handelDrop">
           <div class="row justify-content-start">
-            <div class="col-1">
+            <div class="col-2">
               <p class="mb-3" v-for="l in label" :key="l.id">{{ l.name }}</p>
             </div>
-            <div class="col-1">
+            <div class="col-4">
               <div class="mt-1" v-for="d in divs" :key="d.id">
-                <input class="mb-2" :type="d.data" :placeholder="d.name" />
+                <div v-if="d.data == 'textarea'">
+                  <textarea :placeholder="d.name"></textarea>
+                </div>
+                <div v-else>
+                  <input class="mb-2" :type="d.data" :placeholder="d.name" />
+                </div>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="mt-1" v-for="l in links" :key="l.id">
+                <a v-if="l.name != undefined" :href="l.name">Click here</a>
               </div>
             </div>
           </div>
@@ -34,6 +44,7 @@ export default {
     return {
       divs: [],
       label: [],
+      links: [],
     };
   },
   methods: {
@@ -47,6 +58,13 @@ export default {
         name: data.labelname,
         id: this.label.length,
       };
+      var linkname = {
+        name: data.linkname,
+        id: this.links.length,
+      };
+      if (linkname.name != undefined) {
+        this.links.push(linkname);
+      }
       if (newitem.data != undefined) {
         this.divs.push(newitem);
       }
@@ -59,26 +77,6 @@ export default {
       this.$router.push({ name: "form" });
     },
     formCreate: function () {
-      if (!localStorage.getItem("Formtypes")) {
-        localStorage.setItem("Formtypes", JSON.stringify([]));
-      }
-      const formbuild = JSON.parse(localStorage.getItem("Formtypes"));
-
-      this.divs.map((value) => {
-        formbuild.push({ id: value.id, data: value.data, name: value.name });
-        localStorage.setItem("Formtypes", JSON.stringify(formbuild));
-      });
-
-      if (!localStorage.getItem("Labeltypes")) {
-        localStorage.setItem("Labeltypes", JSON.stringify([]));
-      }
-      const labels = JSON.parse(localStorage.getItem("Labeltypes"));
-
-      this.label.map((value) => {
-        labels.push({ id: value.id, labelname: value.name });
-        localStorage.setItem("Labeltypes", JSON.stringify(labels));
-      });
-
       if (!localStorage.getItem("Fullform")) {
         localStorage.setItem("Fullform", JSON.stringify([]));
       }
@@ -95,6 +93,30 @@ export default {
         }
         console.log(this.label);
       }
+
+      if (this.links.length < this.label.length) {
+        let min = this.links.length;
+        let max = this.label.length;
+        for (let i = min; i <= max; i++) {
+          let linkitem = {
+            name: "No_link",
+            id: i,
+          };
+          this.links.push(linkitem);
+        }
+      }
+      if (this.links.length < this.divs.length) {
+        let min = this.links.length;
+        let max = this.divs.length;
+        for (let i = min; i <= max; i++) {
+          let linkitem = {
+            name: "No_link",
+            id: i,
+          };
+          this.links.push(linkitem);
+        }
+      }
+
       for (let i = 0; i < this.divs.length; i++) {
         if (this.label[i].name === undefined) {
           console.log("you Got me");
@@ -103,6 +125,7 @@ export default {
             id: i,
             inputtype: this.divs[i].data,
             name: this.label[i].name,
+            linkname: this.links[i].name,
           });
           localStorage.setItem("Fullform", JSON.stringify(fullform));
         }
@@ -110,6 +133,7 @@ export default {
 
       this.label = [];
       this.divs = [];
+      this.links=[];
       swal("Nice!", "You Created a form!", "success");
       this.$router.push({ name: "form" });
     },
