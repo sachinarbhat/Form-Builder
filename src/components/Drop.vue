@@ -12,6 +12,13 @@
                 <div v-if="d.data == 'textarea'">
                   <textarea :placeholder="d.name"></textarea>
                 </div>
+                <div v-else-if="d.data == 'table'">
+                  <table class="table table-bordered">
+                    <tr v-for="n in parseInt(d.row)" :key="n">
+                      <td v-for="n in parseInt(d.col)" :key="n"></td>
+                    </tr>
+                  </table>
+                </div>
                 <div v-else>
                   <input class="mb-2" :type="d.data" :placeholder="d.name" />
                 </div>
@@ -52,6 +59,8 @@ export default {
       var newitem = {
         data: data.types,
         name: data.info,
+        row: data.row,
+        col: data.col,
         id: this.divs.length,
       };
       var labelitem = {
@@ -66,7 +75,7 @@ export default {
         this.links.push(linkname);
       }
       if (newitem.data != undefined) {
-        this.divs.push(newitem);
+        if (data) this.divs.push(newitem);
       }
       if (labelitem.name != undefined) {
         this.label.push(labelitem);
@@ -91,7 +100,6 @@ export default {
           };
           this.label.push(labelitem);
         }
-        console.log(this.label);
       }
 
       if (this.links.length < this.label.length) {
@@ -121,6 +129,17 @@ export default {
         if (this.label[i].name === undefined) {
           console.log("you Got me");
         } else {
+          if (this.divs[i].data == "table") {
+            fullform.push({
+              id: i,
+              inputtype: this.divs[i].data,
+              name: this.label[i].name,
+              linkname: this.links[i].name,
+              row: this.divs[i].row,
+              col: this.divs[i].col,
+            });
+            localStorage.setItem("Fullform", JSON.stringify(fullform));
+          }else{
           fullform.push({
             id: i,
             inputtype: this.divs[i].data,
@@ -129,11 +148,12 @@ export default {
           });
           localStorage.setItem("Fullform", JSON.stringify(fullform));
         }
+        }
       }
 
       this.label = [];
       this.divs = [];
-      this.links=[];
+      this.links = [];
       swal("Nice!", "You Created a form!", "success");
       this.$router.push({ name: "form" });
     },
@@ -163,5 +183,13 @@ export default {
   position: absolute;
   bottom: 0px;
   width: 100px;
+}
+td {
+  padding: 15px;
+}
+table,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 </style>

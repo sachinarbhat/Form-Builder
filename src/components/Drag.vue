@@ -17,6 +17,8 @@
         <div class="collapse" id="collapseExample2">
         <drag class="list-group-item" :transfer-data="filebox">File Upload</drag>
         <drag class="list-group-item" :transfer-data="urlbox">URL</drag>
+        <input v-model="tablesize.row" placeholder="Enter number of rows"/><input v-model="tablesize.col" placeholder="Enter number of columns"/>
+        <drag class="list-group-item" :transfer-data="tablesize">Table</drag>
     </div>
   </div>
 </template>
@@ -35,6 +37,12 @@ export default {
       },
       msg2: {
         linkname: "",
+      },
+      tablesize:{
+        types:"table",
+        row: "",
+        col:"",
+        info:"Tabel content"
       },
       textareabox: {
         types: "textarea",

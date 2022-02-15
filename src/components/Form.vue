@@ -6,12 +6,17 @@
           <div  v-for="info in fullform" :key="info.id">
             <label class="form-label" v-if="info.name != 'No_label'">{{ info.name }} </label>
             <br/>
-              <input v-if="info.inputtype !='textarea'"
+              <input v-if="info.inputtype !='textarea' && info.inputtype !='table'"
               class="mb-3"
               :type="info.inputtype"
               :placeholder="'Enter' + ' ' + info.name + ' ' + 'Here...'"
             /><a v-if="info.linkname!='No_link'" :href="info.linkname"><i class="fa fa-link"></i></a>
             <textarea v-if="info.inputtype=='textarea'" :placeholder="'Enter' + ' ' + info.name + ' ' + 'Here...'"></textarea>
+            <table v-if="info.inputtype=='table'" style="width:50%">
+            <tr v-for="n in parseInt(info.row)" :key="n">
+            <td v-for="n in parseInt(info.col)" :key="n"></td>
+            </tr>
+            </table>
           </div>
     </div>
     <button @click="jsonwatch" class="btn btn-outline-info">JSON Watch</button>
@@ -70,5 +75,13 @@ export default {
 }
 h2 {
   text-align: center;
+}
+td {
+  padding: 15px;
+}
+table,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 </style>
